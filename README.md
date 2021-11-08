@@ -1,7 +1,5 @@
-# we-do.app
+# mrkdwn
 
-Social To-Do request app.
+minimal mrkdwn blog website builder
 
-Sign-up and help other users complete thier tasks. 
-
-Post your own help request and use relevant tags to match with users who can help!
+Built with supabase + vue3
