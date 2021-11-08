@@ -29,23 +29,22 @@ export default {
       
     async function postItem() {
       title.value = getTitle(postValue.value)
-      try {
-        const { data, error } = await supabase
-          .from("blog_posts")
-          .update([
-            {
-              body: postValue.value,
-              title: title.value
-            },
-          ])
-           .eq('user', store.user.id)
-      } catch (error) {
-        alert(error.message);
-      } finally {
-        loading.value = false;
-        success.value = true;
-        successfulPost()
-      }
+       try {
+            loading.value = true
+            const updates = {
+            id: route.params.id,
+            body: postValue.value,
+            title: title.value,
+            }
+            let { error } = await supabase.from("blog_posts").upsert(updates, {
+            returning: "minimal", // Don't return the value after inserting
+            })
+        if (error) throw error
+        } catch (error) {
+            alert(error.message)
+        } finally {
+            loading.value = false
+        }
     }
 
     async function getPost() {
